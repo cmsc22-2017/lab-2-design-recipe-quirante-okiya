@@ -110,7 +110,7 @@ class Cat implements IPet {
    *    ... this.longhaired   -- boolean
    */
   public boolean sameNamePet(String name) {
-	  return this.name.equals(name);
+    return this.name.equals(name);
   }
 }
 
@@ -130,12 +130,12 @@ class Dog implements IPet {
   //Returns true if this Person's pet name matches the given pet name.
   // TEMPLATE
   /* FIELD:
-   * 		... this.name   -- String 
-   * 		... this.kind   -- String
+   * 	... this.name   -- String 
+   * 	... this.kind   -- String
    *    ... this.longhaired   -- boolean
    */
   public boolean sameNamePet(String name) {
-  	return this.name.equals(name);
+    return this.name.equals(name);
   }
 }
 
@@ -159,22 +159,22 @@ class ExamplesIPet {
   
   boolean testIsOlder(Tester t) {
     return
-	  t.checkExpect(this.frank.isOlder(this.trint), true) &&
-	  t.checkExpect(this.frank.isOlder(this.kobe), false) &&
-	  t.checkExpect(this.mike.isOlder(this.frank), true);
+      t.checkExpect(this.frank.isOlder(this.trint), true) &&
+      t.checkExpect(this.frank.isOlder(this.kobe), false) &&
+      t.checkExpect(this.mike.isOlder(this.frank), true);
   }
   
   boolean testSameNamePet(Tester t) {
-  	return
-  		t.checkExpect(this.a.sameNamePet("Franky"), true) &&
-  		t.checkExpect(this.b.sameNamePet("Trint"), false) &&
-  		t.checkExpect(this.c.sameNamePet("Bantay"), true) &&
-  		t.checkExpect(this.d.sameNamePet("Dan"), false);
+    return
+      t.checkExpect(this.a.sameNamePet("Franky"), true) &&
+      t.checkExpect(this.b.sameNamePet("Trint"), false) &&
+      t.checkExpect(this.c.sameNamePet("Bantay"), true) &&
+      t.checkExpect(this.d.sameNamePet("Dan"), false);
   }
   
   boolean testPetPerish(Tester t) {
-  	return
-  		t.checkExpect(this.frank.petPerish(), frank1) &&
-  		t.checkExpect(this.trint.petPerish(), trint1);
+    return
+      t.checkExpect(this.frank.petPerish(), frank1) &&
+      t.checkExpect(this.trint.petPerish(), trint1);
   }
 }
