@@ -1,4 +1,4 @@
-//Person -> boolean
+// Person -> boolean
 // Returns true if this Person  is older than the Person given
 // boolean isOlder(Person other) {
 //	return false;
@@ -33,7 +33,7 @@ import tester.Tester;
 
 
 interface IPet {
-	public boolean sameNamePet(String name);
+  public boolean sameNamePet(String name);
 }
 
 class Person {
@@ -43,32 +43,50 @@ class Person {
   
   Person(String name, IPet pet, int age) {
     this.name = name;
-		this.pet = pet;
-		this.age = age;
+    this.pet = pet;
+    this.age = age;
   }
   
-  boolean isOlder(Person other){
-	  if(this.age > other.age) {
-	    return true;
-	  }
-	  else {
-	    return false;
-	  }
+  boolean isOlder(Person other) {
+    if(this.age > other.age) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
   
   // -> Person
   // produces this Person whose pet is perished.
+  /* Person petPerish() {
+   *   return null;
+   * }
+   */
+  /* TEMPLATE
+   * Fields:
+   *    ...this.name   -- String
+   *    ...this.age    -- int
+   */
   Person petPerish() {
-  	return new Person(this.name, new NoPet(), this.age);
+    return new Person(this.name, new NoPet(), this.age);
   }
 }
 
-class NoPet implements IPet{
-	NoPet() {}
+
+// TEMPLATE
+/* Fields:
+*    ...this.name   --- String
+* 
+*  Methods:
+*    ...sameNamePet(String name)   --- boolean
+*/
+
+class NoPet implements IPet {
+  NoPet() {}
 	
-	public boolean sameNamePet(String name) {
-		return false;
-	}
+  public boolean sameNamePet(String name) {
+    return false;
+  }
 }
 
 
@@ -78,17 +96,17 @@ class Cat implements IPet {
   boolean longhaired;
   
   Cat(String name, String kind, boolean longhaired) {
-   this.name = name;
-   this.kind = kind;
-   this.longhaired = longhaired;
+    this.name = name;
+    this.kind = kind;
+    this.longhaired = longhaired;
   }
   
   //String -> boolean
   //Returns true if this Person's pet name matches the given pet name.
   // TEMPLATE
   /* FIELD:
-   * 		... this.name   -- String 
-   * 		... this.kind   -- String
+   * 	... this.name   -- String 
+   * 	... this.kind   -- String
    *    ... this.longhaired   -- boolean
    */
   public boolean sameNamePet(String name) {
