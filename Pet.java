@@ -1,4 +1,4 @@
-// Person -> boolean
+//Person -> boolean
 // Returns true if this Person  is older than the Person given
 // boolean isOlder(Person other) {
 //	return false;
@@ -33,62 +33,72 @@ import tester.Tester;
 
 
 interface IPet {
-  public boolean sameNamePet(String name);
+	public boolean sameNamePet(String name);	
+	
+	//-> boolean
+	// determines whether this Person has a pet with the given name.
+	boolean hasPetNamed(String name);
 }
+
+// interface of list of pets
+interface ILoPet {
+	
+	//-> boolean
+	// determines whether this Person has a pet with the given name.
+	boolean hasPetNamed(String name);
+	
+}
+
+// empty list of pets
+class MtLoPet implements ILoPet {
+	public MtLoPet(){}
+	
+	public boolean hasPetNamed(String name) {
+		return false;
+	}
+}
+
+//list of pets
+class ConsLoPet implements ILoPet {
+	IPet first;
+	ILoPet rest;
+	
+	public ConsLoPet(IPet first, ILoPet rest) {
+		this.first = first;
+		this.rest = rest;
+	}
+
+	public boolean hasPetNamed(String name) {
+		if(this.first.hasPetNamed(name)) {
+			return true;
+		}
+		else {
+			return this.rest.hasPetNamed(name);
+		}
+	}
+}
+
 
 class Person {
   String name;
-  IPet pet;
+  ILoPet pet;
   int age;
   
-  Person(String name, IPet pet, int age) {
+  Person(String name, ILoPet pet, int age) {
     this.name = name;
-    this.pet = pet;
-    this.age = age;
+		this.pet = pet;
+		this.age = age;
   }
   
-  boolean isOlder(Person other) {
-    if(this.age > other.age) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  
-  // -> Person
-  // produces this Person whose pet is perished.
-  /* Person petPerish() {
-   *   return null;
-   * }
-   */
-  /* TEMPLATE
-   * Fields:
-   *    ...this.name   -- String
-   *    ...this.age    -- int
-   */
-  Person petPerish() {
-    return new Person(this.name, new NoPet(), this.age);
-  }
+  boolean isOlder(Person other){
+	  if(this.age > other.age) {
+	    return true;
+	  }
+	  else {
+	    return false;
+	  }
+  } 
 }
-
-
-// TEMPLATE
-/* Fields:
-*    ...this.name   --- String
-* 
-*  Methods:
-*    ...sameNamePet(String name)   --- boolean
-*/
-
-class NoPet implements IPet {
-  NoPet() {}
-	
-  public boolean sameNamePet(String name) {
-    return false;
-  }
-}
-
 
 class Cat implements IPet {
   String name;
@@ -96,22 +106,34 @@ class Cat implements IPet {
   boolean longhaired;
   
   Cat(String name, String kind, boolean longhaired) {
-    this.name = name;
-    this.kind = kind;
-    this.longhaired = longhaired;
+   this.name = name;
+   this.kind = kind;
+   this.longhaired = longhaired;
   }
   
   //String -> boolean
   //Returns true if this Person's pet name matches the given pet name.
   // TEMPLATE
   /* FIELD:
-   * 	... this.name   -- String 
-   * 	... this.kind   -- String
+   * 		... this.name   -- String 
+   * 		... this.kind   -- String
    *    ... this.longhaired   -- boolean
    */
   public boolean sameNamePet(String name) {
-    return this.name.equals(name);
+	  return this.name.equals(name);
   }
+  
+  //String -> boolean
+  //Returns true if this Dog's name matches the given pet name.
+  // TEMPLATE
+  /* FIELD:
+   * 		... this.name   -- String 
+   * 		... this.kind   -- String
+   *    ... this.longhaired   -- boolean
+   */
+	public boolean hasPetNamed(String name) {
+		return this.name.equals(name);
+	}
 }
 
 class Dog implements IPet {
@@ -130,51 +152,50 @@ class Dog implements IPet {
   //Returns true if this Person's pet name matches the given pet name.
   // TEMPLATE
   /* FIELD:
-   * 	... this.name   -- String 
-   * 	... this.kind   -- String
+   * 		... this.name   -- String 
+   * 		... this.kind   -- String
    *    ... this.longhaired   -- boolean
    */
   public boolean sameNamePet(String name) {
-    return this.name.equals(name);
+  	return this.name.equals(name);
   }
+  
+ 
+  //String -> boolean
+  //Returns true if this Dog's name matches the given pet name.
+  // TEMPLATE
+  /* FIELD:
+   * 		... this.name   -- String 
+   * 		... this.kind   -- String
+   *    ... this.longhaired   -- boolean
+   */
+	public boolean hasPetNamed(String name) {
+		return this.name.equals(name);
+	}
 }
 
 class ExamplesIPet {
   ExamplesIPet() {}
   
-  IPet nopet = new NoPet();
   
   IPet a = new Cat("Franky", "Bengal cat", false);
   IPet b = new Cat("Cutie", "Maine Coon", true);
   IPet c = new Dog("Bantay", "Dalmatian", true);
   IPet d = new Dog("Franco", "Rottweiler", false);
   
-  Person frank = new Person("Frank", this.a, 20);
-  Person trint = new Person("Trint", this.b, 19);
-  Person mike = new Person("Mike", this.c, 24);
-  Person kobe = new Person("Kobe", this.d, 40);
-  Person frank1 = new Person("Frank", nopet, 20);
-  Person trint1 = new Person("Trint", nopet, 19);
+  ILoPet mt = new MtLoPet();
+  ILoPet catList = new ConsLoPet(this.a, new ConsLoPet(this.b, this.mt));
+  ILoPet dogList = new ConsLoPet(this.c, new ConsLoPet(this.d, this.mt));
 
+  Person frank = new Person("Frank", this.catList, 20);
+  Person trint = new Person("Trint", this.dogList, 19);
+ 
   
-  boolean testIsOlder(Tester t) {
-    return
-      t.checkExpect(this.frank.isOlder(this.trint), true) &&
-      t.checkExpect(this.frank.isOlder(this.kobe), false) &&
-      t.checkExpect(this.mike.isOlder(this.frank), true);
-  }
-  
-  boolean testSameNamePet(Tester t) {
-    return
-      t.checkExpect(this.a.sameNamePet("Franky"), true) &&
-      t.checkExpect(this.b.sameNamePet("Trint"), false) &&
-      t.checkExpect(this.c.sameNamePet("Bantay"), true) &&
-      t.checkExpect(this.d.sameNamePet("Dan"), false);
-  }
-  
-  boolean testPetPerish(Tester t) {
-    return
-      t.checkExpect(this.frank.petPerish(), frank1) &&
-      t.checkExpect(this.trint.petPerish(), trint1);
+  boolean testHasPetNamed(Tester t) {
+  	return
+  		t.checkExpect(this.catList.hasPetNamed("Franky"), true) &&
+  		t.checkExpect(this.catList.hasPetNamed("Bantay"), false) &&
+  		t.checkExpect(this.dogList.hasPetNamed("Franco"), true) &&
+  		t.checkExpect(this.dogList.hasPetNamed("Cutie"), false);
   }
 }
